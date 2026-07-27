@@ -1007,3 +1007,156 @@ img{
         text-align: center;
     }
 }
+
+/*==================================================
+CONTACT
+==================================================*/
+
+.contact {
+
+    padding: 8rem var(--page-padding);
+
+}
+
+.contact__inner {
+
+    max-width: var(--container-width);
+    margin: 0 auto;
+
+}
+
+.contact__header {
+
+    max-width: 700px;
+    margin-bottom: 5rem;
+
+}
+
+.contact__eyebrow {
+
+    margin-bottom: 1rem;
+
+    font-size: .85rem;
+    letter-spacing: .20em;
+    text-transform: uppercase;
+
+}
+
+.contact__title {
+
+    margin-bottom: 2rem;
+
+    font-size: clamp(2.2rem,5vw,4rem);
+    line-height: 1.1;
+
+}
+
+.contact__intro {
+
+    max-width: 36rem;
+
+    font-size: 1.15rem;
+    line-height: 1.8;
+
+    color: var(--color-text-muted);
+
+}
+
+/* ---------- FORM ---------- */
+
+.contact-form {
+
+    max-width: 760px;
+
+}
+
+.contact-form .form-field {
+
+    margin-bottom: 2.5rem;
+
+}
+
+.contact-form input,
+.contact-form textarea {
+
+    width: 100%;
+
+    padding: .75rem 0;
+
+    border: none;
+    border-bottom: 1px solid var(--color-border);
+
+    background: transparent;
+
+    color: var(--color-text);
+
+    font: inherit;
+
+    transition:
+        border-color .3s ease,
+        transform .3s ease;
+
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+
+    color: var(--color-text-muted);
+
+}
+
+.contact-form textarea {
+
+    min-height: 180px;
+
+    resize: vertical;
+
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+
+    outline: none;
+
+    border-bottom-color: var(--color-text);
+
+    transform: translateX(4px);
+
+}
+
+/* ---------- BUTTON ---------- */
+
+.contact-form .button,
+.contact-form .wpcf7-submit {
+
+    margin-top: 2rem;
+
+    cursor: pointer;
+
+}
+
+/* ---------- CF7 ---------- */
+
+.wpcf7-not-valid-tip {
+
+    margin-top: .5rem;
+
+    font-size: .85rem;
+
+}
+
+.wpcf7-response-output {
+
+    margin-top: 2rem !important;
+
+    padding: 0 !important;
+
+    border: none !important;
+
+}
+
+.wpcf7-spinner {
+
+    margin-left: 1rem;
+
+}

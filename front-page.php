@@ -412,15 +412,44 @@
                 </article>
 
             </div>
-
-
-            <a href="http://localhost:10094/wp-content/uploads/2026/07/CV_FR_2025_OK.pdf" class="button">
+            <a href="<?php echo get_template_directory_uri(); ?>/assets/images/CV_FR_2025_OK.pdf"
+                class="button"
+                download>
                 Download CV
             </a>
 
         </div>
 
-    </section>
+   <section class="contact" id="contact">
+
+    <div class="contact__inner">
+
+        <header class="contact__header">
+
+            <p class="contact__eyebrow">
+                CONTACT
+            </p>
+
+            <h2 class="contact__title">
+                Let's work together.
+            </h2>
+
+            <p class="contact__intro">
+                Have a project in mind or simply want to say hello?
+                I'd be happy to hear from you.
+            </p>
+
+        </header>
+
+        <?php
+        echo do_shortcode(
+            '[contact-form-7 id="9715966" title="Formulaire de contact"]'
+        );
+        ?>
+
+    </div>
+
+</section>
 
 </main>
 
