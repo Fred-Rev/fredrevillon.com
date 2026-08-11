@@ -210,6 +210,7 @@
                         $projects_query->the_post();
 
                         $project_context = get_field('project_context');
+                        $project_description = get_field('project_description');
                         $project_link = get_field('project_link');
                         $project_link_label = get_field('project_link_label');
                         $project_technologies = get_field('project_technologies');
@@ -276,7 +277,7 @@
 
 
                                 <div class="project-card__description">
-                                    <?php the_content(); ?>
+                                    <?php echo esc_html($project_description); ?>
                                 </div>
 
 
@@ -412,7 +413,7 @@
                 </article>
 
             </div>
-            <a href="<?php echo get_template_directory_uri(); ?>/assets/images/CV_FR_2025_OK.pdf"
+            <a href="<?php echo get_template_directory_uri(); ?>/assets/images/CV_2026_wip.png"
                 class="button"
                 download>
                 Download CV

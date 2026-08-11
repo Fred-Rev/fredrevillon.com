@@ -43,7 +43,7 @@ function fred_starter_scripts()
         'fred-style',
         get_template_directory_uri() . '/assets/css/main.css',
         [],
-        wp_get_theme()->get('Version')
+        filemtime(get_template_directory() . '/assets/css/main.css')
     );
 
     wp_enqueue_script(

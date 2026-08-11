@@ -1160,3 +1160,31 @@ CONTACT
     margin-left: 1rem;
 
 }
+
+@media (max-width: 1100px) {
+
+    .site-header__inner {
+        padding-inline: var(--page-padding);
+    }
+
+    .main-menu {
+        gap: 1.5rem;
+    }
+
+    .journey-step {
+        --connector-gap: 2.5rem;
+        width: 38%;
+    }
+
+    .work__grid {
+        grid-template-columns: 1fr;
+        max-width: 760px;
+        margin-inline: auto;
+    }
+
+    .about__grid {
+        grid-template-columns: 1fr;
+        max-width: 760px;
+        margin-inline: auto;
+    }
+}
