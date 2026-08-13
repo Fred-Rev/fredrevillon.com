@@ -7,6 +7,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const path = document.querySelector(".journey__path");
     const steps = document.querySelectorAll(".journey-step");
     const origin = document.querySelector(".journey-origin");
+    const stage = document.querySelector(".journey-stage");
+    const svg = document.querySelector(".journey-stage__svg");
+    const destination = document.querySelector(".journey-destination");
 
     const prefersReducedMotion = window.matchMedia(
         "(prefers-reduced-motion: reduce)"
@@ -127,41 +130,212 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     }
 
-    /* ==========================
-       TRACÉ DU JOURNEY
-    ========================== */
+/* ==========================
+   TRACÉ DU JOURNEY
+========================== */
 
-    if (journey && path) {
-        if (prefersReducedMotion) {
-            gsap.set(path, {
-                strokeDasharray: "none",
-                strokeDashoffset: 0,
-                autoAlpha: 1
-            });
-        } else {
-            const pathLength = path.getTotalLength();
+if (
+    journey &&
+    path &&
+    origin &&
+    stage &&
+    svg &&
+    destination
+) {
+    const points = [
+        origin,
+        ...journey.querySelectorAll(".journey-step__point"),
+        destination
+    ];
 
-            gsap.set(path, {
-                strokeDasharray: `${pathLength} ${pathLength}`,
-                strokeDashoffset: pathLength,
-                autoAlpha: 1
-            });
+    let journeyTween;
 
-            gsap.to(path, {
-                strokeDashoffset: 0,
-                ease: "none",
+    const getPointPosition = (element, stageRect) => {
+        const rect = element.getBoundingClientRect();
 
-                scrollTrigger: {
-                    trigger: journey,
-                    start: "top 70%",
-                    end: "bottom 55%",
-                    scrub: true,
-                    invalidateOnRefresh: true
-                }
-            });
+        return {
+            x:
+                rect.left +
+                rect.width / 2 -
+                stageRect.left,
+
+            y:
+                rect.top +
+                rect.height / 2 -
+                stageRect.top
+        };
+    };
+
+    const buildSmoothPath = (
+        coords,
+        tension = 0.8
+    ) => {
+        if (coords.length < 2) {
+            return "";
         }
+
+        let d = `M ${coords[0].x} ${coords[0].y}`;
+
+        for (
+            let i = 0;
+            i < coords.length - 1;
+            i += 1
+        ) {
+            const p0 =
+                coords[i - 1] || coords[i];
+
+            const p1 = coords[i];
+            const p2 = coords[i + 1];
+
+            const p3 =
+                coords[i + 2] || p2;
+
+            const cp1 = {
+                x:
+                    p1.x +
+                    ((p2.x - p0.x) / 6) *
+                        tension,
+
+                y:
+                    p1.y +
+                    ((p2.y - p0.y) / 6) *
+                        tension
+            };
+
+            const cp2 = {
+                x:
+                    p2.x -
+                    ((p3.x - p1.x) / 6) *
+                        tension,
+
+                y:
+                    p2.y -
+                    ((p3.y - p1.y) / 6) *
+                        tension
+            };
+
+            d += `
+                C ${cp1.x} ${cp1.y},
+                  ${cp2.x} ${cp2.y},
+                  ${p2.x} ${p2.y}
+            `;
+        }
+
+        return d;
+    };
+
+    const drawJourneyPath = () => {
+        const stageRect =
+            stage.getBoundingClientRect();
+
+        svg.setAttribute(
+            "viewBox",
+            `0 0 ${stageRect.width} ${stageRect.height}`
+        );
+
+        const coords = points.map((point) =>
+            getPointPosition(
+                point,
+                stageRect
+            )
+        );
+
+        path.setAttribute(
+            "d",
+            buildSmoothPath(coords)
+        );
+
+        /*
+         * Supprime les points SVG
+         * précédemment générés.
+         */
+        svg
+            .querySelectorAll(
+                ".journey__point"
+            )
+            .forEach((point) => {
+                point.remove();
+            });
+
+        /*
+         * Crée les vrais points
+         * dans le même repère SVG
+         * que la courbe.
+         */
+        coords.forEach(({ x, y }) => {
+            const circle =
+                document.createElementNS(
+                    "http://www.w3.org/2000/svg",
+                    "circle"
+                );
+
+            circle.setAttribute("cx", x);
+            circle.setAttribute("cy", y);
+            circle.setAttribute("r", "5");
+
+            circle.classList.add(
+                "journey__point"
+            );
+
+            svg.appendChild(circle);
+        });
+    };
+
+    const createJourneyAnimation = () => {
+        if (journeyTween) {
+            journeyTween.scrollTrigger?.kill();
+            journeyTween.kill();
+        }
+
+        drawJourneyPath();
+
+        /*
+         * TEMPORAIRE :
+         * ligne toujours visible.
+         * On remettra l'animation
+         * ScrollTrigger à la fin.
+         */
+        gsap.set(path, {
+            strokeDasharray: "none",
+            strokeDashoffset: 0,
+            autoAlpha: 1
+        });
+    };
+
+    createJourneyAnimation();
+
+    if (document.fonts?.ready) {
+        document.fonts.ready.then(() => {
+            createJourneyAnimation();
+            ScrollTrigger.refresh();
+        });
     }
 
+    let resizeTimer;
+
+    window.addEventListener(
+        "resize",
+        () => {
+            window.clearTimeout(
+                resizeTimer
+            );
+
+            resizeTimer =
+                window.setTimeout(() => {
+                    createJourneyAnimation();
+                    ScrollTrigger.refresh();
+                }, 150);
+        }
+    );
+
+    window.addEventListener(
+        "load",
+        () => {
+            createJourneyAnimation();
+            ScrollTrigger.refresh();
+        }
+    );
+}
     /* ==========================
        APPARITION DES ÉTAPES
     ========================== */
@@ -195,8 +369,4 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
     }
-
-    window.addEventListener("load", () => {
-        ScrollTrigger.refresh();
-    });
 });

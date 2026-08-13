@@ -115,6 +115,19 @@ img{
     justify-content: space-between;
 }
 
+.site-branding {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+}
+
+.site-tagline {
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+}
+
 .site-logo {
     font-size: 0.85rem;
     font-weight: var(--fw-bold);
@@ -209,23 +222,44 @@ img{
     position: relative;
 }
 
-.journey-origin {
+.journey-origin-wrap {
+    position: relative;
     display: inline-block;
-
-    width: 0.16em;
-    height: 0.16em;
-    margin-left: 0.06em;
-
-    border-radius: 50%;
-    background-color: currentColor;
-
-    vertical-align: 0.05em;
-    transform-origin: center;
-
-    will-change: transform;
 }
 
+.journey-origin-dot {
+    display: inline;
+}
 
+.journey-origin {
+    position: absolute;
+    width: 0.65rem;
+    height: 0.65rem;
+
+    left: 50%;
+    top: 38%;
+
+    transform: translate(-50%, -50%);
+    opacity: 0;
+}
+
+.journey-destination-letter {
+    position: relative;
+    display: inline;
+}
+
+.journey-destination {
+    position: absolute;
+
+    width: 0.65rem;
+    height: 0.65rem;
+
+    left: 50%;
+    top: 0.29em;
+
+    transform: translate(-50%, -50%);
+    opacity: 0;
+}
 
 /* Le cercle qui annonce qu'un mouvement va commencer */
 
@@ -248,7 +282,7 @@ img{
     width: min(100%, var(--container-width));
     height: 1250px;
 
-    margin: -250px auto 0;
+    margin: 0 auto;
 
     transform: none;
 }
@@ -275,8 +309,8 @@ img{
     stroke-linejoin: round;
     vector-effect: non-scaling-stroke;
 
-    opacity: 0;
-    visibility: hidden;
+    opacity: 1;
+    visibility: visible;
 }
 
 
@@ -293,19 +327,38 @@ img{
     width: 32%;
 
     opacity: 0;
-    transform: translateY(24px);
 
     transition:
-        opacity 700ms ease,
-        transform 700ms ease;
+        opacity 700ms ease;
 }
 
 .journey-step.is-visible {
     opacity: 1;
-    transform: translateY(0);
 }
 
+.journey-stage {
+    position: relative;
+}
 
+.journey-stage__svg {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: visible;
+    pointer-events: none;
+
+    z-index: 1;
+}
+
+.hero,
+.journey,
+.work {
+    position: relative;
+    z-index: 2;
+}
 /* Placement par rapport au point d’ancrage du chemin */
 
 .journey-step--right {
@@ -323,27 +376,27 @@ img{
 
 .journey-step--understand {
     --anchor-x: 46.6%;
-    top: 10.5%;
+    top: 8%;
 }
 
 .journey-step--organize {
     --anchor-x: 33.6%;
-    top: 26%;
+    top: 27%;
 }
 
 .journey-step--conceive {
     --anchor-x: 41.1%;
-    top: 45.5%;
+    top: 47%;
 }
 
 .journey-step--build {
     --anchor-x: 43.9%;
-    top: 65%;
+    top: 67%;
 }
 
 .journey-step--tell {
     --anchor-x: 32%;
-    top: 84.5%;
+    top: 87%;
 }
 
 
@@ -379,9 +432,9 @@ img{
     content: "";
 
     position: absolute;
-    top: 0.84rem;
+    top: calc(0.55rem + (var(--point-size) / 2));
 
-    width: calc(var(--connector-gap) - 1rem);
+    width: var(--connector-gap);
     height: 1px;
 
     background: var(--color-text);
@@ -389,13 +442,12 @@ img{
 }
 
 .journey-step--right .journey-step__content::before {
-    right: calc(100% + 0.5rem);
+    right: 100%;
 }
 
 .journey-step--left .journey-step__content::before {
-    left: calc(100% + 0.5rem);
+    left: 100%;
 }
-
 
 /* Typography */
 
@@ -415,7 +467,6 @@ img{
     font-size: clamp(1rem, 1.3vw, 1.1rem);
     line-height: 1.7;
 }
-
 
 /* Transition vers Work */
 
@@ -1187,4 +1238,38 @@ CONTACT
         max-width: 760px;
         margin-inline: auto;
     }
+    /* TEMP — réglage du Journey */
+.journey-step {
+    opacity: 1;
+    transform: none;
+}
+.journey-step__point {
+    opacity: 0;
+}
+
+.journey__point {
+    fill: var(--color-text);
+}
+.journey-origin,
+.journey-step__point,
+.journey-destination {
+    opacity: 0;
+}
+.journey__point {
+    fill: var(--color-text);
+}
+.work__title {
+    position: relative;
+}
+
+.journey-destination {
+    position: absolute;
+
+    width: 0.65rem;
+    height: 0.65rem;
+
+    left: 0;
+    top: 0.25em;
+}
+
 }

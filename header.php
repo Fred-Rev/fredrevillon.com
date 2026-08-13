@@ -16,9 +16,17 @@
 
     <div class="site-header__inner">
 
-        <a class="site-logo" href="<?php echo esc_url(home_url('/')); ?>">
-            FRED REVILLON
-        </a>
+        <div class="site-branding">
+
+            <a class="site-logo" href="<?php echo esc_url(home_url('/')); ?>">
+                FRED REVILLON
+            </a>
+
+            <span class="site-tagline">
+                DIGITAL PROJECT MANAGER | AUDIOVISUAL PRODUCER
+            </span>
+
+        </div>
 
         <nav class="main-navigation">
 

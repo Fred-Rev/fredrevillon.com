@@ -1,7 +1,15 @@
 <?php get_header(); ?>
 
 <main class="site-main">
+<div class="journey-stage">
 
+    <svg
+        class="journey-stage__svg"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+    >
+        <path class="journey__path" d="" />
+    </svg>
     <!-- HERO -->
     <section class="hero">
 
@@ -13,9 +21,12 @@
             </h1>
 
             <p class="hero__intro">
-                I design, build and tell stories<br>
-                through different mediums
-                <span class="journey-origin" aria-hidden="true"></span>
+                 I design, build and tell stories<br>
+                 through different mediums
+                    <span class="journey-origin-wrap">
+                        <span class="journey-origin-dot">.</span>
+                        <span class="journey-origin" aria-hidden="true"></span>
+                    </span>
             </p>
 
         </div>
@@ -31,29 +42,7 @@
         </h2>
 
         <div class="journey__track">
-
-            <svg
-                class="journey__line"
-                viewBox="0 0 1400 1250"
-                preserveAspectRatio="xMidYMid meet"
-                aria-hidden="true"
-            >
-
-                <path
-                    class="journey__path"
-                    d="
-                        M 790 0
-                        C 770 70, 650 130, 560 190
-                        C 470 280, 430 370, 500 470
-                        C 590 590, 690 690, 610 820
-                        C 530 950, 390 1020, 470 1090
-                        C 520 1140, 570 1180, 570 1240
-                    "
-                />
-
-            </svg>
-
-
+            
             <article class="journey-step journey-step--right journey-step--understand">
 
                 <span
@@ -175,9 +164,13 @@
                 </p>
 
                 <h2 class="work__title">
-                    Projects designed<br>
-                    from thought to experience.
-                </h2>
+    Pro<span class="journey-destination-letter">j<span
+        class="journey-destination"
+        aria-hidden="true"
+    ></span></span>ects designed<br>
+    from thought to<br>
+    experience.
+</h2>
 
                 <p class="work__intro">
                     A selection of projects combining
@@ -214,7 +207,7 @@
                         $project_link = get_field('project_link');
                         $project_link_label = get_field('project_link_label');
                         $project_technologies = get_field('project_technologies');
-
+                        $project_role = get_field('mon_role');
                         $technologies = [];
 
                         if (!empty($project_technologies)) {
@@ -280,6 +273,14 @@
                                     <?php echo esc_html($project_description); ?>
                                 </div>
 
+                                <?php if (!empty($project_role)) : ?>
+
+                                <p class="project-card__role">
+                                <strong>Role</strong><br>
+                                <?php echo esc_html($project_role); ?>
+                                </p>
+
+                                <?php endif; ?>
 
                                 <?php if (!empty($technologies)) : ?>
 
@@ -413,7 +414,7 @@
                 </article>
 
             </div>
-            <a href="<?php echo get_template_directory_uri(); ?>/assets/images/CV_2026_wip.png"
+            <a href="<?php echo get_template_directory_uri(); ?>/assets/images/CV_FR_2026.pdf"
                 class="button"
                 download>
                 Download CV
