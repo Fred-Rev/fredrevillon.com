@@ -16,119 +16,165 @@ document.addEventListener("DOMContentLoaded", () => {
     ).matches;
 
     let heartbeat;
+    let journeyTween;
     let journeyHasStarted = false;
     let autoStartTimer;
 
     /* ==========================
-       HERO + HEARTBEAT
-    ========================== */
+   HERO + HEARTBEAT
+========================== */
 
-    if (origin && !prefersReducedMotion) {
-        heartbeat = gsap.timeline({
-            paused: true
-        });
+const createHeartbeat = () => {
+    const originPoint = document.querySelector(
+        ".journey__point--origin"
+    );
 
-        const addHeartbeat = () => {
-            heartbeat
-                .to(origin, {
-                    scale: 2.8,
-                    x: 3,
-                    y: 1,
-                    duration: 0.3,
-                    ease: "power2.out"
-                })
-                .to(origin, {
-                    scale: 1,
-                    x: 0,
-                    y: 0,
-                    duration: 0.28,
-                    ease: "power2.in"
-                })
-                .to(
-                    origin,
-                    {
-                        scale: 2.1,
-                        x: 2,
-                        y: 1,
-                        duration: 0.24,
-                        ease: "power2.out"
-                    },
-                    "+=0.12"
-                )
-                .to(origin, {
-                    scale: 1,
-                    x: 0,
-                    y: 0,
-                    duration: 0.34,
-                    ease: "power2.in"
-                })
-                .to({}, {
-                    duration: 1.2
-                });
-        };
+    if (!originPoint || prefersReducedMotion) {
+        return;
+    }
 
-        for (let i = 0; i < 7; i += 1) {
-            addHeartbeat();
-        }
+    if (heartbeat) {
+        heartbeat.kill();
+    }
 
-        const startJourney = () => {
-            if (journeyHasStarted) {
-                return;
-            }
+    heartbeat = gsap.timeline({
+        paused: true
+    });
 
-            journeyHasStarted = true;
-
-            window.clearTimeout(autoStartTimer);
-            heartbeat.pause();
-
-            gsap.set(origin, {
-                scale: 1,
-                x: 0,
-                y: 0
-            });
-        };
-
-        window.addEventListener("scroll", startJourney, {
-            once: true,
-            passive: true
-        });
-
-        const heroTimeline = gsap.timeline();
-
-        heroTimeline
-            .to(".hero__title", {
-                opacity: 1,
-                y: 0,
-                duration: 2,
+    const addHeartbeat = () => {
+        heartbeat
+            .to(originPoint, {
+                scale: 3.5,//gros battement
+                transformOrigin: "center center",
+                duration: 0.3,
                 ease: "power2.out"
             })
+            .to(originPoint, {
+                scale: 0.85,//retour à la normale
+                duration: 0.28,
+                ease: "power2.in"
+            })
             .to(
-                ".hero__intro",
+                originPoint,
                 {
-                    opacity: 1,
-                    y: 0,
-                    duration: 1.2,
+                    scale: 1.12,//petit battement
+                    transformOrigin: "center center",
+                    duration: 0.24,
                     ease: "power2.out"
                 },
-                "-=0.75"
+                "+=0.12"
             )
-            .add(() => {
-                heartbeat.play();
+            .to(originPoint, {
+                scale: 1,
+                duration: 0.18,
+                ease: "power2.in"
+            })
+            .to({}, {
+                duration: 1.2
+            });
+    };
 
-                autoStartTimer = window.setTimeout(
-                    startJourney,
-                    9000
-                );
-            }, "+=0.5");
-    } else {
-        gsap.set(
-            [".hero__title", ".hero__intro"],
+    for (let i = 0; i < 7; i += 1) {
+        addHeartbeat();
+    }
+};
+
+const startJourney = () => {
+    if (journeyHasStarted) {
+        return;
+    }
+
+    journeyHasStarted = true;
+
+    window.clearTimeout(autoStartTimer);
+
+    if (heartbeat) {
+        heartbeat.pause();
+    }
+
+    gsap.set(".journey__point--origin", {
+        scale: 1
+    });
+};
+
+window.addEventListener("scroll", startJourney, {
+    once: true,
+    passive: true
+});
+
+if (!prefersReducedMotion) {
+    const heroTimeline = gsap.timeline();
+
+    heroTimeline
+        .to(".hero__title", {
+            opacity: 1,
+            y: 0,
+            duration: 2,
+            ease: "power2.out"
+        })
+        .to(
+            ".hero__intro",
             {
                 opacity: 1,
-                y: 0
+                y: 0,
+                duration: 1.2,
+                ease: "power2.out"
+            },
+            "-=0.75"
+        )
+        .add(() => {
+            document.body.classList.add(
+                "journey-origin-visible"
+            );
+
+            createHeartbeat();
+
+            if (heartbeat) {
+                heartbeat.play();
             }
-        );
+
+            const autoDrawJourney = () => {
+    if (journeyHasStarted || !journeyTween) {
+        return;
     }
+
+    journeyHasStarted = true;
+
+    if (heartbeat) {
+        heartbeat.pause();
+    }
+
+    gsap.set(".journey__point--origin", {
+        scale: 1
+    });
+
+    journeyTween.scrollTrigger?.disable();
+
+    gsap.to(path, {
+        strokeDashoffset: 0,
+        duration: 5,
+        ease: "power1.inOut"
+    });
+};
+
+            autoStartTimer = window.setTimeout(
+                autoDrawJourney,
+                7000
+            );
+        }, "+=0.5");
+} else {
+    gsap.set(
+        [".hero__title", ".hero__intro"],
+        {
+            opacity: 1,
+            y: 0
+        }
+    );
+
+    document.body.classList.add(
+        "journey-origin-visible"
+    );
+}
 
 /* ==========================
    TRACÉ DU JOURNEY
@@ -148,9 +194,7 @@ if (
         destination
     ];
 
-    let journeyTween;
-
-    const getPointPosition = (element, stageRect) => {
+        const getPointPosition = (element, stageRect) => {
         const rect = element.getBoundingClientRect();
 
         return {
@@ -168,7 +212,7 @@ if (
 
     const buildSmoothPath = (
         coords,
-        tension = 0.8
+        tension = 1
     ) => {
         if (coords.length < 2) {
             return "";
@@ -262,7 +306,7 @@ if (
          * dans le même repère SVG
          * que la courbe.
          */
-        coords.forEach(({ x, y }) => {
+        coords.forEach(({ x, y }, index) => {
             const circle =
                 document.createElementNS(
                     "http://www.w3.org/2000/svg",
@@ -277,6 +321,10 @@ if (
                 "journey__point"
             );
 
+            if (index === 0) {
+        circle.classList.add("journey__point--origin");
+    }
+
             svg.appendChild(circle);
         });
     };
@@ -289,17 +337,29 @@ if (
 
         drawJourneyPath();
 
-        /*
-         * TEMPORAIRE :
-         * ligne toujours visible.
-         * On remettra l'animation
-         * ScrollTrigger à la fin.
-         */
-        gsap.set(path, {
-            strokeDasharray: "none",
-            strokeDashoffset: 0,
-            autoAlpha: 1
-        });
+        const pathLength = path.getTotalLength();
+
+gsap.set(path, {
+    strokeDasharray: `${pathLength} ${pathLength}`,
+    strokeDashoffset: pathLength,
+    autoAlpha: 1
+});
+
+journeyTween = gsap.to(path, {
+    strokeDashoffset: 0,
+    ease: "none",
+
+    scrollTrigger: {
+        trigger: stage,
+        start: "top top",
+
+        endTrigger: destination,
+        end: "center 70%",
+
+        scrub: true,
+        invalidateOnRefresh: true
+    }
+});  
     };
 
     createJourneyAnimation();
