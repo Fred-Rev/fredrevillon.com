@@ -323,8 +323,21 @@ img{
         opacity 700ms ease;
 }
 
+.journey-step__content {
+    position: relative;
+
+    transform: translateY(20px);
+
+    transition:
+        transform 700ms ease;
+}
+
 .journey-step.is-visible {
     opacity: 1;
+}
+
+.journey-step.is-visible .journey-step__content {
+    transform: translateY(0);
 }
 
 .journey-stage {
