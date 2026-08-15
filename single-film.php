@@ -13,6 +13,7 @@ $type = get_field('type');
 $summary = get_field('resume');
 $directors = get_field('realisateurs');
 $vimeo_url = get_field('vimeo_url');
+
 ?>
 
         <article class="film">
@@ -31,7 +32,7 @@ $vimeo_url = get_field('vimeo_url');
         
         <?php if (!empty($directors)) : ?>
         <p class="film__director">
-        Un film de <?php echo esc_html($directors); ?>
+        Directed by <?php echo esc_html($directors); ?>
         </p>
         <?php endif; ?>
     </header>
@@ -75,7 +76,7 @@ $vimeo_url = get_field('vimeo_url');
 
             <?php if (!empty($team)) : ?>
                 <div class="film__meta-item">
-                    <span>Équipe</span>
+                    <span>Team</span>
                     <p><?php echo nl2br(esc_html($team)); ?></p>
                 </div>
             <?php endif; ?>

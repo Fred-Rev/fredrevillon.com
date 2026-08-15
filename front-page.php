@@ -205,10 +205,18 @@
                         $project_context = get_field('project_context');
                         $project_description = get_field('project_description');
                         $project_link = get_field('project_link');
+                        $project_film = get_field('project_film');
                         $project_link_label = get_field('project_link_label');
                         $project_technologies = get_field('project_technologies');
                         $project_role = get_field('mon_role');
                         $technologies = [];
+
+                        if (!empty($project_film)) {
+                            $project_url = get_permalink($project_film->ID);
+                                } else {
+                                $project_url = $project_link;
+}
+
 
                         if (!empty($project_technologies)) {
                             $technologies = array_filter(
@@ -301,24 +309,22 @@
                                 <?php endif; ?>
 
 
-                                <?php if (!empty($project_link)) : ?>
+                                <?php if (!empty($project_url)) : ?>
 
-                                    <a
-                                        class="button project-card__link"
-                                        href="<?php echo esc_url($project_link); ?>"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        <?php
-                                        echo esc_html(
-                                            !empty($project_link_label)
-                                                ? $project_link_label
-                                                : 'View project'
-                                        );
-                                        ?>
-                                    </a>
+    <a
+        class="button project-card__link"
+        href="<?php echo esc_url($project_url); ?>"
+    >
+        <?php
+        echo esc_html(
+            !empty($project_link_label)
+                ? $project_link_label
+                : 'View project'
+        );
+        ?>
+    </a>
 
-                                <?php endif; ?>
+                    <?php endif; ?>
 
                             </div>
 
@@ -328,16 +334,21 @@
 
                 </div>
 
-            <?php else : ?>
+                    
 
-                <p class="work__empty">
-                    No projects have been published yet.
-                </p>
+        <a class="work__more-films" href="<?php echo esc_url(get_post_type_archive_link('film')); ?>">
+            I want more <span aria-hidden="true">→</span>
+        </a>
 
-            <?php endif; ?>
+    <?php else : ?>
 
+        <p class="work__empty">
+            No projects have been published yet.
+        </p>
 
-            <?php wp_reset_postdata(); ?>
+    <?php endif; ?>
+
+    <?php wp_reset_postdata(); ?>
 
         </div>
 
@@ -347,80 +358,93 @@
     <!-- ABOUT -->
     <section class="about" id="about">
 
-        <div class="about__inner">
+    <div class="about__inner">
 
-            <header class="about__header">
+        <header class="about__header">
 
-                <p class="about__eyebrow">
-                    ABOUT
-                </p>
+            <p class="about__label">
+                About
+            </p>
 
-                <h2 class="about__title">
-                    A multidisciplinary profile<br>
-                    driven by curiosity.
-                </h2>
+            <h2 class="about__title">
+                A multidisciplinary profile,<br>
+                driven by curiosity.
+            </h2>
 
-                <p class="about__intro">
-                    My career has taken me through audiovisual production,
-                    digital communication and web development.
-                    Today, I combine creativity, project management and
-                    technical expertise to build meaningful digital experiences.
-                </p>
+            <p class="about__intro">
+                From audiovisual production to digital communication
+                and web development, my path has crossed different
+                mediums — always with the same desire to understand,
+                create and make things happen.
+            </p>
+
 
             </header>
 
+                <div class="about__triptych">
 
-            <div class="about__grid">
+            <figure class="about__photo about__photo--bass">
+                <img src="wp-content/themes/fred_starter/assets/images/fred_basses.jpg" alt="Playing bass guitar">
+            </figure>
 
-                <article class="about__card">
+            <figure class="about__photo about__photo--portrait">
+                <img src="wp-content/themes/fred_starter/assets/images/fred_about.jpg" alt="Portrait of Fred Révillon">
+            </figure>
 
-                    <h3>Experience</h3>
-
-                    <ul>
-                        <li>Audiovisual Production</li>
-                        <li>Digital Communication</li>
-                        <li>Web Development</li>
-                    </ul>
-
-                </article>
-
-
-                <article class="about__card">
-
-                    <h3>Skills</h3>
-
-                    <ul>
-                        <li>WordPress</li>
-                        <li>PHP</li>
-                        <li>JavaScript</li>
-                        <li>CSS</li>
-                        <li>Project Management</li>
-                        <li>UI / UX</li>
-                    </ul>
-
-                </article>
-
-
-                <article class="about__card">
-
-                    <h3>Education</h3>
-
-                    <ul>
-                        <li>OpenClassrooms</li>
-                        <li>Front-End Development</li>
-                        <li>Continuous Learning</li>
-                    </ul>
-
-                </article>
-
-            </div>
-            <a href="<?php echo get_template_directory_uri(); ?>/assets/images/CV_FR_2026.pdf"
-                class="button"
-                download>
-                Download CV
-            </a>
+            <figure class="about__photo about__photo--hoggar">
+                <img src="wp-content/themes/fred_starter/assets/images/fred Hoggar.jpg" alt="In the Hoggar mountains">
+            </figure>
 
         </div>
+
+<section class="about__facts">
+
+    <p class="about__facts-label">
+        Selected Facts
+    </p>
+
+        <div class="about__facts-grid">
+
+            <div class="about__fact">
+                <strong>25+ years</strong>
+                <span>Audiovisual production, digital and creative projects</span>
+            </div>
+
+            <div class="about__fact">
+                <strong>€500k</strong>
+                <span>Budgets managed</span>
+            </div>
+
+            <div class="about__fact">
+                <strong>40 people</strong>
+                <span>Teams coordinated</span>
+            </div>
+
+            <div class="about__fact">
+                <strong>M6 · TF1 · Canal+</strong>
+                <span>Broadcast and production experience</span>
+            </div>
+
+            <div class="about__fact">
+                <strong>Remy Cointreau · Evian · Bel · Danone</strong>
+            <span>Selected brands</span>
+        </div>
+
+        <div class="about__fact">
+            <strong>WordPress · PHP · JavaScript</strong>
+            <span>Current development stack</span>
+        </div>
+        </div>
+    
+                
+    <a href="<?php echo get_template_directory_uri(); ?>/assets/images/CV_FR_2026.pdf" class="button about__cv-link">
+        View CV
+    </a>
+
+</section>
+            </div>
+    </section>
+</div>
 
    <section class="contact" id="contact">
 

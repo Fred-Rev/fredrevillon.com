@@ -676,6 +676,35 @@ body.journey-origin-visible .journey__point--origin {
 
 }
 
+.work__more-films {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+
+    margin-top: 3rem;
+
+    font-size: .9rem;
+    font-weight: var(--fw-medium);
+    letter-spacing: .16em;
+    text-transform: uppercase;
+
+    transition: opacity var(--transition-fast);
+}
+
+.work__more-films span {
+    display: inline-block;
+    font-size: 1.3em;
+
+    transition: transform var(--transition-fast);
+}
+
+.work__more-films:hover {
+    opacity: .6;
+}
+
+.work__more-films:hover span {
+    transform: translateX(.4rem);
+}
 /* ==================================================
    ABOUT
 ================================================== */
@@ -700,7 +729,7 @@ body.journey-origin-visible .journey__point--origin {
 
 }
 
-.about__eyebrow{
+.about__label{
 
     margin-bottom:1rem;
     letter-spacing:.2em;
@@ -725,41 +754,76 @@ body.journey-origin-visible .journey__point--origin {
 
 }
 
-.about__grid{
+.about__triptych {
+    display: grid;
+    grid-template-columns: 1fr .85fr 1fr;
+    align-items: center;
+    gap: clamp(1rem, 2vw, 2rem);
 
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:2rem;
-    margin-bottom:4rem;
-
+    margin-top: clamp(4rem, 7vw, 7rem);
 }
 
-.about__card{
-
-    padding:2rem;
-    border:1px solid #e5e5e5;
-    border-radius:12px;
-
+.about__photo {
+    margin: 0;
+    overflow: hidden;
 }
 
-.about__card h3{
-
-    margin-bottom:1.5rem;
-
+.about__photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
 
-.about__card ul{
-
-    list-style:none;
-    padding:0;
-    margin:0;
-
+.about__photo--bass,
+.about__photo--hoggar {
+    aspect-ratio: 4 / 5;
 }
 
-.about__card li{
+.about__photo--portrait {
+    aspect-ratio: 4 / 5;
+    transform: translateY(3rem);
+}
+.about__facts {
+    margin-top: clamp(6rem, 10vw, 10rem);
+}
 
-    margin-bottom:.8rem;
+.about__facts-label {
+    margin: 0 0 3rem;
 
+    font-size: .85rem;
+    letter-spacing: .20em;
+    text-transform: uppercase;
+}
+
+.about__facts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    border-top: 1px solid var(--color-border);
+}
+
+.about__fact {
+    padding: 2rem 2rem 2rem 0;
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+.about__fact strong {
+    display: block;
+    margin-bottom: .5rem;
+
+    font-size: clamp(1.6rem, 2.5vw, 2.3rem);
+    font-weight: var(--fw-semibold);
+}
+
+.about__fact span {
+    color: var(--color-text-muted);
+    line-height: 1.6;
+}
+
+.about__cv-link {
+    margin-top: 3rem;
 }
 
 .button{
@@ -782,10 +846,12 @@ body.journey-origin-visible .journey__point--origin {
 
 @media(max-width:900px){
 
-    .about__grid{
-
+    .about__triptych{
         grid-template-columns:1fr;
+    }
 
+    .about__photo--portrait{
+        transform:translateY(0);
     }
 
 }
@@ -1024,6 +1090,147 @@ body.journey-origin-visible .journey__point--origin {
 }
 
 /* ==================================================
+   FILMS ARCHIVE
+================================================== */
+
+.films {
+    padding:
+        clamp(6rem, 9vw, 9rem)
+        var(--page-padding)
+        clamp(8rem, 12vw, 12rem);
+}
+
+.films__inner {
+    max-width: var(--container-width);
+    margin: 0 auto;
+}
+
+
+/* ---------- HEADER ---------- */
+
+.films__header {
+    max-width: 760px;
+    margin-bottom: clamp(4rem, 7vw, 7rem);
+}
+
+.films__label {
+    margin: 0 0 1rem;
+
+    font-size: .85rem;
+    letter-spacing: .20em;
+    text-transform: uppercase;
+}
+
+.films__title {
+    margin: 0;
+
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    line-height: 1;
+    letter-spacing: -.04em;
+}
+
+.films__intro {
+    max-width: 36rem;
+    margin: 1.5rem 0 0;
+
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: var(--color-text-muted);
+}
+
+
+/* ---------- GRID ---------- */
+
+.films__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:
+        clamp(4rem, 6vw, 6rem)
+        clamp(1.5rem, 2.5vw, 2.5rem);
+}
+
+
+/* ---------- CARD ---------- */
+
+.film-card a {
+    display: block;
+}
+
+.film-card__image {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: #f2f2f2;
+}
+
+.film-card__image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    display: block;
+
+    transition: transform .4s ease;
+}
+
+.film-card:hover .film-card__image img {
+    transform: scale(1.025);
+}
+
+
+/* ---------- CONTENT ---------- */
+
+.film-card__content {
+    padding-top: 1.25rem;
+}
+
+.film-card__title {
+    margin: 0;
+
+    font-size: clamp(1.2rem, 1.8vw, 1.6rem);
+    font-weight: var(--fw-semibold);
+    line-height: 1.2;
+}
+
+.film-card__type {
+    margin: .5rem 0 0;
+
+    font-size: .85rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+
+    color: var(--color-text-muted);
+}
+
+
+/* ---------- PLACEHOLDER ---------- */
+
+.film-card__placeholder {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--color-text-muted);
+}
+
+
+/* ---------- BACK LINK ---------- */
+
+.films__back {
+    display: inline-block;
+    margin-top: clamp(5rem, 8vw, 8rem);
+
+    font-size: .95rem;
+    transition: opacity var(--transition-fast);
+}
+
+.films__back:hover {
+    opacity: .55;
+}
+
+/* ==================================================
    RESPONSIVE MOBILE
 ================================================== */
 
@@ -1130,60 +1337,7 @@ body.journey-origin-visible .journey__point--origin {
     }
 
 
-    /* ---------- JOURNEY ---------- */
-
-    .journey {
-        padding-inline: var(--page-padding);
-        padding-bottom: 5rem;
-    }
-
-    .journey__track {
-        height: auto;
-        margin-top: 0;
-
-        display: flex;
-        flex-direction: column;
-        gap: 4rem;
-    }
-
-    /*
-     * Le tracé SVG desktop n'est pas adapté à la petite largeur.
-     * On le masque sur mobile pour obtenir un résultat propre.
-     */
     
-
-    .journey-step,
-    .journey-step--left,
-    .journey-step--right {
-        position: relative;
-
-        top: auto;
-        left: auto;
-        right: auto;
-
-        width: 100%;
-        padding-left: 2rem;
-
-        text-align: left;
-    }
-
-    .journey-step__point,
-    .journey-step--right .journey-step__point,
-    .journey-step--left .journey-step__point {
-        top: 0.55rem;
-        left: 0;
-        right: auto;
-    }
-
-    .journey-step__content::before,
-    .journey-step--right .journey-step__content::before,
-    .journey-step--left .journey-step__content::before {
-        top: 0.85rem;
-        right: calc(100% + 0.5rem);
-        left: auto;
-
-        width: 1rem;
-    }
 
 
     /* ---------- WORK ---------- */
@@ -1220,12 +1374,6 @@ body.journey-origin-visible .journey__point--origin {
     .about__header {
         margin-bottom: 3rem;
     }
-
-    .about__grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-
 
     /* ---------- FOOTER ---------- */
 
@@ -1413,10 +1561,5 @@ CONTACT
         margin-inline: auto;
     }
 
-    .about__grid {
-        grid-template-columns: 1fr;
-        max-width: 760px;
-        margin-inline: auto;
-    }
    
 }
