@@ -320,6 +320,7 @@ if (
             circle.classList.add(
                 "journey__point"
             );
+            circle.dataset.pointIndex = index;
 
             if (index === 0) {
         circle.classList.add("journey__point--origin");
@@ -400,33 +401,68 @@ journeyTween = gsap.to(path, {
        APPARITION DES ÉTAPES
     ========================== */
 
+
     if (steps.length > 0) {
-        if (
-            prefersReducedMotion ||
-            !("IntersectionObserver" in window)
-        ) {
-            steps.forEach((step) => {
-                step.classList.add("is-visible");
-            });
-        } else {
-            const stepObserver = new IntersectionObserver(
-                (entries, observer) => {
-                    entries.forEach((entry) => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add("is-visible");
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                },
-                {
-                    threshold: 0.90,
-                    rootMargin: "0px 0px -30% 0px"
-                }
+
+    if (
+        prefersReducedMotion ||
+        !("IntersectionObserver" in window)
+    ) {
+
+        steps.forEach((step, index) => {
+
+            step.classList.add("is-visible");
+
+            const svgPoint = svg?.querySelector(
+                `.journey__point[data-point-index="${index + 1}"]`
             );
 
-            steps.forEach((step) => {
-                stepObserver.observe(step);
-            });
+            if (svgPoint) {
+                svgPoint.classList.add("is-visible");
+            }
+        });
+
+    } else {
+
+        const stepObserver = new IntersectionObserver(
+            (entries, observer) => {
+
+               entries.forEach((entry) => {
+
+    const stepIndex =
+        Array.from(steps).indexOf(entry.target) + 1;
+
+    const svgPoint = svg?.querySelector(
+        `.journey__point[data-point-index="${stepIndex}"]`
+    );
+
+    if (entry.isIntersecting) {
+
+        entry.target.classList.add("is-visible");
+
+        if (svgPoint) {
+            svgPoint.classList.add("is-visible");
+        }
+
+    } else {
+
+        entry.target.classList.remove("is-visible");
+
+        if (svgPoint) {
+            svgPoint.classList.remove("is-visible");
         }
     }
+});
+            },
+            {
+                threshold: 0.90,
+                rootMargin: "0px 0px -30% 0px"
+            }
+        );
+
+        steps.forEach((step) => {
+            stepObserver.observe(step);
+        });
+    }
+ }
 });

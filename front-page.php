@@ -469,7 +469,7 @@
 
         <?php
         echo do_shortcode(
-            '[contact-form-7 id="9715966" title="Formulaire de contact"]'
+            '[contact-form-7 id="7287bd4" title="Contact"]'
         );
         ?>
 
