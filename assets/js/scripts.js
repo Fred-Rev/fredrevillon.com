@@ -20,6 +20,42 @@ document.addEventListener("DOMContentLoaded", () => {
     let journeyHasStarted = false;
     let autoStartTimer;
 
+    const menuToggle = document.querySelector(".menu-toggle");
+    const mainNavigation = document.querySelector(".main-navigation");
+
+if (menuToggle && mainNavigation) {
+
+    menuToggle.addEventListener("click", () => {
+
+        const isOpen =
+            menuToggle.getAttribute("aria-expanded") === "true";
+
+        menuToggle.setAttribute(
+            "aria-expanded",
+            String(!isOpen)
+        );
+
+        menuToggle.classList.toggle("is-open");
+        mainNavigation.classList.toggle("is-open");
+    });
+
+    mainNavigation
+        .querySelectorAll("a")
+        .forEach((link) => {
+
+            link.addEventListener("click", () => {
+
+                menuToggle.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
+                menuToggle.classList.remove("is-open");
+                mainNavigation.classList.remove("is-open");
+            });
+        });
+}
+
     /* ==========================
    HERO + HEARTBEAT
 ========================== */

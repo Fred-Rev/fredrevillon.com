@@ -28,18 +28,29 @@
 
         </div>
 
-        <nav class="main-navigation">
+        <button
+    class="menu-toggle"
+    type="button"
+    aria-expanded="false"
+    aria-controls="main-navigation"
+>
+    <span></span>
+    <span></span>
+</button>
 
-            <?php
-            wp_nav_menu([
-                'theme_location' => 'main-menu',
-                'container'      => false,
-                'menu_class'     => 'main-menu',
-                'fallback_cb'    => false,
-            ]);
-            ?>
-
-        </nav>
+<nav
+    class="main-navigation"
+    id="main-navigation"
+>
+    <?php
+    wp_nav_menu([
+        'theme_location' => 'main-menu',
+        'container'      => false,
+        'menu_class'     => 'main-menu',
+        'fallback_cb'    => false,
+    ]);
+    ?>
+</nav>
 
     </div>
 
