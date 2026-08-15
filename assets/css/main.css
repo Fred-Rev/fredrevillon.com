@@ -878,6 +878,151 @@ body.journey-origin-visible .journey__point--origin {
 
 
 }
+
+/* ==================================================
+   FILM SINGLE
+================================================== */
+
+.film-single {
+    padding:
+        clamp(3.5rem, 6vw, 6rem)
+        var(--page-padding)
+        clamp(7rem, 10vw, 10rem);
+}
+
+.film {
+    max-width: var(--container-width);
+    margin: 0 auto;
+}
+
+
+/* ---------- HEADER ---------- */
+
+.film__header {
+    margin-bottom: clamp(3rem, 5vw, 5rem);
+}
+
+.film__eyebrow {
+    margin: 0 0 1rem;
+
+    font-size: .85rem;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+}
+
+.film__title {
+    margin: 0;
+
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: var(--fw-bold);
+    line-height: .95;
+    letter-spacing: -.05em;
+}
+
+.film__director {
+    margin: 1.5rem 0 0;
+
+    font-size: 1.15rem;
+    color: var(--color-text-muted);
+}
+
+
+/* ---------- VIDEO ---------- */
+
+.film__video {
+    width: min(100%, 900px);
+    margin: 0 auto clamp(4rem, 7vw, 7rem);
+}
+
+.film__video iframe {
+    display: block;
+
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
+
+    border: 0;
+}
+
+
+/* ---------- DETAILS ---------- */
+
+.film__details {
+    width: min(100%, 900px);
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: minmax(250px, .8fr) minmax(0, 1.5fr);
+    gap: clamp(3rem, 6vw, 6rem);
+
+    align-items: start;
+}
+
+
+/* ---------- META ---------- */
+
+.film__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.film__meta-item {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+}
+
+.film__meta-item span {
+    flex: 0 0 auto;
+
+    font-size: .75rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+}
+
+.film__meta-item p {
+    margin: 0;
+    line-height: 1.6;
+}
+
+
+/* Équipe : volontairement différente des métadonnées courtes */
+
+.film__meta-item--team {
+    display: block;
+    margin-top: 1.5rem;
+}
+
+.film__meta-item--team span {
+    display: block;
+    margin-bottom: .75rem;
+}
+
+.film__meta-item--team p {
+    line-height: 1.8;
+}
+
+
+/* ---------- SUMMARY ---------- */
+
+.film__summary {
+    max-width: 42rem;
+
+    font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+    line-height: 1.8;
+    color: var(--color-text-muted);
+}
+
+.film__summary > :first-child {
+    margin-top: 0;
+}
+
+.film__summary > :last-child {
+    margin-bottom: 0;
+}
+
 /* ==================================================
    RESPONSIVE MOBILE
 ================================================== */
