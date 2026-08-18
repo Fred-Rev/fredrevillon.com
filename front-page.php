@@ -210,6 +210,8 @@
                         $project_technologies = get_field('project_technologies');
                         $project_role = get_field('mon_role');
                         $technologies = [];
+                        $image_fit = get_field('image_fit') ?: 'cover';
+
 
                         if (!empty($project_film)) {
                             $project_url = get_permalink($project_film->ID);
@@ -227,9 +229,9 @@
                             );
                         }
                         ?>
-
-                        <article class="project-card">
-
+                        
+                        
+                        <article class="project-card project-card--<?php echo esc_attr($image_fit); ?>">
                             <div class="project-card__image">
 
                                 <?php if (has_post_thumbnail()) : ?>
@@ -421,12 +423,12 @@
             </div>
 
             <div class="about__fact">
-                <strong>M6 · TF1 · Canal+</strong>
-                <span>Broadcast and production experience</span>
+                <strong>M6 · Young & Rubicam · Publicis Dialog</strong>
+                <span>Broadcast, agency and production experience</span>
             </div>
 
             <div class="about__fact">
-                <strong>Remy Cointreau · Evian · Bel · Danone</strong>
+                <strong>Evian · Bel · Danone · Elle International</strong>
             <span>Selected brands</span>
         </div>
 
@@ -436,17 +438,47 @@
         </div>
         </div>
     
-                
-    <a href="<?php echo get_template_directory_uri(); ?>/assets/images/CV_FR_2026.pdf" class="button about__cv-link">
+          <div class="about__links">
+
+    <a
+        class="button"
+        href="<?php echo esc_url(get_template_directory_uri() . '/assets/pdf/CV_FR_2026_OK.pdf'); ?>"
+        target="_blank"
+        rel="noopener noreferrer"
+    >
         View CV
     </a>
 
-</section>
-            </div>
-    </section>
+    <a
+        class="button"
+        href="https://www.linkedin.com/in/fr%C3%A9d%C3%A9ric-revillon-20366a32/"
+        target="_blank"
+        rel="noopener noreferrer"
+    >
+        LinkedIn
+    </a>
+
+    <a
+        class="button"
+        href="https://www.imdb.com/fr/name/nm1056078/"
+        target="_blank"
+        rel="noopener noreferrer"
+    >
+        IMDb
+    </a>
+
 </div>
 
-   <section class="contact" id="contact">
+</section><!-- .about__facts -->
+
+</div><!-- .about__inner -->
+
+</section><!-- .about -->
+
+</div><!-- .journey-stage -->
+
+
+<section class="contact" id="contact">
 
     <div class="contact__inner">
 

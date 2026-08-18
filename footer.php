@@ -2,7 +2,7 @@
 
     <div class="site-footer__inner">
         <p class="site-footer__version">
-            &copy; <?php echo date('Y'); ?> Fred Revillon · Version 1.0
+            &copy; <?php echo date('Y'); ?> Fred Revillon · Version 1.5
         </p>
     </div>
 

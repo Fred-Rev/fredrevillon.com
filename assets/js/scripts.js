@@ -125,11 +125,13 @@ const startJourney = () => {
     window.clearTimeout(autoStartTimer);
 
     if (heartbeat) {
-        heartbeat.pause();
+        heartbeat.kill();
+        heartbeat = null;
     }
 
     gsap.set(".journey__point--origin", {
-        scale: 1
+        scale: 1,
+        transformOrigin: "center center"
     });
 };
 
@@ -177,12 +179,14 @@ if (!prefersReducedMotion) {
     journeyHasStarted = true;
 
     if (heartbeat) {
-        heartbeat.pause();
-    }
+    heartbeat.kill();
+    heartbeat = null;
+}
 
-    gsap.set(".journey__point--origin", {
-        scale: 1
-    });
+gsap.set(".journey__point--origin", {
+    scale: 1,
+    transformOrigin: "center center"
+});
 
     journeyTween.scrollTrigger?.disable();
 
