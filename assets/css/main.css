@@ -1018,7 +1018,24 @@ body.journey-origin-visible .journey__point--origin {
     margin: 0 auto;
 }
 
+.film__back {
+    display: inline-flex;
+    align-items: center;
 
+    margin-top: 4rem;
+
+    font-size: .9rem;
+    font-weight: var(--fw-medium);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+
+    transition: opacity var(--transition-fast);
+}
+
+.film__back:hover,
+.film__back:focus-visible {
+    opacity: .55;
+}
 /* ---------- HEADER ---------- */
 
 .film__header {

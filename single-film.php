@@ -94,6 +94,12 @@ $vimeo_url = get_field('vimeo_url');
         <?php endif; ?>
 
     </div>
+            <a
+    class="film__back"
+    href="<?php echo esc_url(get_post_type_archive_link('film')); ?>"
+>
+    ← Back to films
+</a>
 
 </article>
 
